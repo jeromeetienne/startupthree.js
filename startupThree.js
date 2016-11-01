@@ -26,7 +26,7 @@ function startUpTHREEjs(exports, options, callback){
 	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
 	camera.position.z = 10;
 	if( options.cameraControls === 'OrbitControls' ){
-		var controls	= new THREE.OrbitControls(camera)
+		var controls	= new THREE.OrbitControls(camera, renderer.domElement)
 	}else if( options.cameraControls === false ){
 		var controls = null
 	}else{

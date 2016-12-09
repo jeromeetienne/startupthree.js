@@ -19,7 +19,7 @@ startUpTHREEjs(window, {}, function(demo){
 	var geometry = new THREE.TorusGeometry(1, 0.5)
 	var material = new THREE.MeshNormalMaterial()
 	var mesh = new THREE.Mesh(geometry, material)
-	scene.add(mesh)
+	demo.scene.add(mesh)
 
 	onRenderFcts.push(function(){
 		mesh.rotation.x += 0.01

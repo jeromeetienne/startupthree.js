@@ -6,8 +6,6 @@
 
 
 # TODO
-- handle the loading in this function
-  - document write for now
 - add webvr options
 
 - add rayinput option
@@ -26,3 +24,7 @@
 - remove the lines which are in all three.js demo
 - make it tunable, like with ammo.js or not
 - make it easily integrable
+
+
+- DONE handle the loading in this function
+  - document write for now

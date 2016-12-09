@@ -2,7 +2,7 @@
  * main function
  */
 function startUpTHREEjs(exports, options, callback){
-	// var urlPrefix = 'https://rawgit.com/jeromeetienne/startupthree.js/master/'
+	var urlPrefix = 'https://rawgit.com/jeromeetienne/startupthree.js/master/examples/'
 	var urlPrefix = './'
 
 	startUpTHREEjs._loadStartThreejsScripts(urlPrefix, function(){
@@ -20,7 +20,6 @@ function startUpTHREEjs(exports, options, callback){
 startUpTHREEjs._loadStartThreejsScripts = function(urlPrefix, onLoaded){
 	var firstBatchUrls = []
 	var secondBatchUrls = []
-	
 
 	firstBatchUrls.push(urlPrefix+'vendor/three.js/build/three.min.js')
 	firstBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/libs/stats.min.js')

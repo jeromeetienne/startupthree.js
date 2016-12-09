@@ -1,7 +1,7 @@
 # How to handle load ?
 - could be nice to have automatic loading of the js files
 - document.write ? or ajax and then eval ?
-  - the less black magick the better
+  - the less black magic the better
 - how to handle that in a multi module-imports ecosystem ?
 
 
@@ -9,6 +9,7 @@
 - handle the loading in this function
   - document write for now
 - add webvr options
+
 - add rayinput option
 - add ammoWorld options
 - have an options parameter

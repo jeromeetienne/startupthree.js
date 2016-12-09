@@ -1,8 +1,59 @@
+/**
+ * main function
+ */
 function startUpTHREEjs(exports, options, callback){
 	startUpTHREEjs.loadStartThreejsScripts(function(){
 		startUpTHREEjs.init(exports, options, callback)
-	})	
+	})
 }
+
+
+/**
+ * load all the scripts needed by startupthree.js
+ */
+startUpTHREEjs.loadStartThreejsScripts = function(onLoaded){
+	var firstBatchUrls = []
+	var secondBatchUrls = []
+
+	firstBatchUrls.push('vendor/three.js/build/three.min.js')
+	firstBatchUrls.push('vendor/three.js/examples/js/libs/stats.min.js')
+
+	secondBatchUrls.push('vendor/three.js/examples/js/controls/OrbitControls.js')
+
+	startUpTHREEjs.loadScripts(firstBatchUrls, function(){
+		startUpTHREEjs.loadScripts(secondBatchUrls, function(){
+			onLoaded()
+		})
+	})
+}
+
+/**
+ * load all the scripts
+ */
+startUpTHREEjs.loadScripts = function(urls, onLoaded){
+	var loadedCount = 0
+	for(var i = 0; i < urls.length; i++){
+		loadScript(urls[i], function(content){
+			eval(content)
+			loadedCount++;
+			if( loadedCount === urls.length ){
+				onLoaded()
+			}
+		})
+	}
+	return
+	function loadScript(url, onLoaded){
+		var request = new XMLHttpRequest();
+		request.open("GET", url);
+		request.onreadystatechange = function(){
+			if (request.status === 200 && request.readyState === 4 ){
+				onLoaded(request.responseText);
+			}
+		}
+		request.send()
+	}
+}
+
 	
 startUpTHREEjs.init = function(exports, options, callback){
 	
@@ -87,51 +138,4 @@ startUpTHREEjs.init = function(exports, options, callback){
 	exports.onRenderFcts = onRenderFcts
 	
 	callback(exports)
-}
-
-
-/**
- * load all the scripts needed by startupthree.js
- */
-startUpTHREEjs.loadStartThreejsScripts = function(onLoaded){
-	var firstUrls = []
-	var secondUrls = []
-
-	firstUrls.push('vendor/three.js/build/three.min.js')
-	firstUrls.push('vendor/three.js/examples/js/libs/stats.min.js')
-
-	secondUrls.push('vendor/three.js/examples/js/controls/OrbitControls.js')
-
-	startUpTHREEjs.loadScripts(firstUrls, function(){
-		startUpTHREEjs.loadScripts(secondUrls, function(){
-			onLoaded()
-		})
-	})
-}
-
-/**
- * load all the scripts
- */
-startUpTHREEjs.loadScripts = function(urls, onLoaded){
-	var loadedCount = 0
-	for(var i = 0; i < urls.length; i++){
-		loadScript(urls[i], function(content){
-			eval(content)
-			loadedCount++;
-			if( loadedCount === urls.length ){
-				onLoaded()
-			}
-		})
-	}
-	return
-	function loadScript(url, onLoaded){
-		var request = new XMLHttpRequest();
-		request.open("GET", url);
-		request.onreadystatechange = function(){
-			if (request.status === 200 && request.readyState === 4 ){
-				onLoaded(request.responseText);
-			}
-		}
-		request.send()
-	}
 }

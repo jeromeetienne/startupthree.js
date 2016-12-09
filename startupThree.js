@@ -3,19 +3,16 @@ function startUpTHREEjs(exports, options, callback){
 	// handle options default values
 	options.stats = options.stats !== undefined ? options.stats : true
 	options.cameraControls = options.cameraControls !== undefined ? options.cameraControls : 'OrbitControls'
+	options.webvr = options.webvr !== undefined ? options.webvr : false
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// init renderer
-	var renderer	= new THREE.WebGLRenderer({
-		antialias: true
-	});
-	renderer.setClearColor(new THREE.Color('black'), 1)
+	var renderer	= new THREE.WebGLRenderer();
+	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	document.body.appendChild( renderer.domElement );
 
 	// array of functions for the rendering loop
@@ -27,28 +24,44 @@ function startUpTHREEjs(exports, options, callback){
 	camera.position.z = 10;
 	if( options.cameraControls === 'OrbitControls' ){
 		var controls	= new THREE.OrbitControls(camera)
+	}else if( options.cameraControls === 'VRControls')
+		// Apply VR headset positional data to camera.
+		var controls = new THREE.VRControls(camera);
 	}else if( options.cameraControls === false ){
 		var controls = null
 	}else{
 		console.assert(false, 'unknown options.cameraControls: ' + options.cameraControls)
 	}
 
+
+	// Apply VR stereo rendering to renderer.
+	var vrEffect = new THREE.VREffect(renderer);
+	vrEffect.setSize(window.innerWidth, window.innerHeight);
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// handle window resize
 	window.addEventListener('resize', function(){
-		renderer.setSize( window.innerWidth, window.innerHeight )
+		if( vrEffect !== undefined ){
+			vrEffect.setSize( window.innerWidth, window.innerHeight )
+		}else{
+			renderer.setSize( window.innerWidth, window.innerHeight )
+		}
 		camera.aspect	= window.innerWidth / window.innerHeight
 		camera.updateProjectionMatrix()		
 	}, false)
 
 	// render the scene
 	onRenderFcts.push(function(){
-		renderer.render( scene, camera );		
+		if( vrEffect !== undefined ){
+			vrEffect.render(scene, camera);
+		}else{
+			renderer.render( scene, camera );		
+		}
 	})
 	
+	// init stat.js
 	if( options.stats === true ){
 	        var statsFrame = new Stats();
 	        statsFrame.domElement.style.position = 'absolute';
@@ -64,6 +77,9 @@ function startUpTHREEjs(exports, options, callback){
 	requestAnimationFrame(function animate(nowMsec){
 		// keep looping
 		requestAnimationFrame( animate );
+		// Update controls
+		controls.update();
+
 		// measure time
 		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
 		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)

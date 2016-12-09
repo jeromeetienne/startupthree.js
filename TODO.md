@@ -6,7 +6,7 @@
 
 
 # TODO
-- handle the loading in this funciton
+- handle the loading in this function
   - document write for now
 - add webvr options
 - add rayinput option
@@ -17,6 +17,8 @@
   - cameraControls : 'type', or even your own controls
     - cameraControls: function contructor(){}
     - cameraControls: false to disable it
+- how to load it in codepen and other ?
+  - cdn on github code - e.g. https://rawgit.com/
 
 # Goals
 - seems to be the starting of a boilerplate

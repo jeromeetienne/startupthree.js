@@ -2,16 +2,19 @@
  * main function
  */
 function startUpTHREEjs(exports, options, callback){
-	startUpTHREEjs.loadStartThreejsScripts(function(){
-		startUpTHREEjs.init(exports, options, callback)
+	startUpTHREEjs._loadStartThreejsScripts(function(){
+		startUpTHREEjs._init(exports, options, callback)
 	})
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//		Loading functions
+//////////////////////////////////////////////////////////////////////////////
 
 /**
  * load all the scripts needed by startupthree.js
  */
-startUpTHREEjs.loadStartThreejsScripts = function(onLoaded){
+startUpTHREEjs._loadStartThreejsScripts = function(onLoaded){
 	var firstBatchUrls = []
 	var secondBatchUrls = []
 
@@ -20,8 +23,8 @@ startUpTHREEjs.loadStartThreejsScripts = function(onLoaded){
 
 	secondBatchUrls.push('vendor/three.js/examples/js/controls/OrbitControls.js')
 
-	startUpTHREEjs.loadScripts(firstBatchUrls, function(){
-		startUpTHREEjs.loadScripts(secondBatchUrls, function(){
+	startUpTHREEjs._loadScripts(firstBatchUrls, function(){
+		startUpTHREEjs._loadScripts(secondBatchUrls, function(){
 			onLoaded()
 		})
 	})
@@ -30,7 +33,7 @@ startUpTHREEjs.loadStartThreejsScripts = function(onLoaded){
 /**
  * load all the scripts
  */
-startUpTHREEjs.loadScripts = function(urls, onLoaded){
+startUpTHREEjs._loadScripts = function(urls, onLoaded){
 	var loadedCount = 0
 	for(var i = 0; i < urls.length; i++){
 		loadScript(urls[i], function(content){
@@ -54,9 +57,11 @@ startUpTHREEjs.loadScripts = function(urls, onLoaded){
 	}
 }
 
-	
-startUpTHREEjs.init = function(exports, options, callback){
-	
+//////////////////////////////////////////////////////////////////////////////
+//		init three.js
+//////////////////////////////////////////////////////////////////////////////
+
+startUpTHREEjs._init = function(exports, options, callback){
 	// handle options default values
 	options.stats = options.stats !== undefined ? options.stats : false
 	options.cameraControls = options.cameraControls !== undefined ? options.cameraControls : 'OrbitControls'

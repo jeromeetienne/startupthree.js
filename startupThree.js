@@ -2,7 +2,10 @@
  * main function
  */
 function startUpTHREEjs(exports, options, callback){
-	startUpTHREEjs._loadStartThreejsScripts(function(){
+	// var urlPrefix = 'https://rawgit.com/jeromeetienne/startupthree.js/master/'
+	var urlPrefix = './'
+
+	startUpTHREEjs._loadStartThreejsScripts(urlPrefix, function(){
 		startUpTHREEjs._init(exports, options, callback)
 	})
 }
@@ -14,14 +17,15 @@ function startUpTHREEjs(exports, options, callback){
 /**
  * load all the scripts needed by startupthree.js
  */
-startUpTHREEjs._loadStartThreejsScripts = function(onLoaded){
+startUpTHREEjs._loadStartThreejsScripts = function(urlPrefix, onLoaded){
 	var firstBatchUrls = []
 	var secondBatchUrls = []
+	
 
-	firstBatchUrls.push('vendor/three.js/build/three.min.js')
-	firstBatchUrls.push('vendor/three.js/examples/js/libs/stats.min.js')
+	firstBatchUrls.push(urlPrefix+'vendor/three.js/build/three.min.js')
+	firstBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/libs/stats.min.js')
 
-	secondBatchUrls.push('vendor/three.js/examples/js/controls/OrbitControls.js')
+	secondBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/controls/OrbitControls.js')
 
 	startUpTHREEjs._loadScripts(firstBatchUrls, function(){
 		startUpTHREEjs._loadScripts(secondBatchUrls, function(){
@@ -84,7 +88,7 @@ startUpTHREEjs._init = function(exports, options, callback){
 	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
 	camera.position.z = 10;
 	if( options.cameraControls === 'OrbitControls' ){
-		var controls	= new THREE.OrbitControls(camera)
+		var controls	= new THREE.OrbitControls(camera, renderer.domElement)
 	}else if( options.cameraControls === false ){
 		var controls = null
 	}else{

@@ -1,15 +1,13 @@
 # TODO
-- FIXME stats doesnt work for unknown reason
-  - issue with eval ?
 - add webvr options
 - add rayinput option
 - add phoneasvrcontroller.js
   - usefull if rayinput
-- add detector 
+
+- add detector ?
   - webgl 
   - webvr https://threejs.org/examples/js/vr/WebVR.js
-
-- webvrPolyfillPointerLock true/false
+- webvrPolyfillPointerLock true/false ?
 
 # Goals
 - seems to be the starting of a boilerplate

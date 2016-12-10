@@ -93,8 +93,11 @@ startUpTHREEjs._loadScripts = function(urls, onLoaded){
 		startUpTHREEjs._loadScript(urls[i], function(content, url){
 			// eval the content of this file
 			eval(content)
-			// yucky kludge to export Stats in window
-			if( url.endsWith('/stats.min.js') === true ){
+			// if stats is defined locally but not globally, export it globally
+			// - yucky kludge to export Stats in window, it is because
+			//   stats.js is doing ```var Stats = function(){}```. so
+			//   eval is declaring this as a local only
+			if( typeof(Stats) !== 'undefined' && window.Stats === undefined ){
 				window.Stats = Stats
 			}
 			// update loadedCount

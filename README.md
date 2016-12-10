@@ -9,7 +9,7 @@ three.js demo ?
 
 You dont have to download it. It is possible to get it directly from a CDN 
 thanks to [rawgit](https://rawgit.com).
-[https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js](https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.5.0/startupThree.js)
+[https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js](https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.5.1/startupThree.js)
 
 It works quite well with the online editor, e.g jsfiddle, codepen etc...
 Here is an [startupthree.js example on jsfiddle](https://jsfiddle.net/jetienne/nk9kswk5/). 
@@ -43,7 +43,8 @@ It is important to have a good version because [rawgit](https://rawgit.com) requ
 to be unthrottled. Additionnaly, any tagged content is cached forever.
 So here is how to release
 
-1. replace all the mention of the version in the source by the new version
-1. tag the repo - ```git tag 0.5.0```
+1. replace the old version by the new version in the whole repository
+1. commit the changes - ```git commit -a -m 'bump version'```
+1. tag the repo - ```git tag 0.5.1```
 1. push the tag - ```git push --tags```
 1. you are done.

@@ -11,6 +11,9 @@ You dont have to download it. It is possible to get it directly from a CDN
 thanks to rawgit.
 [https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js](https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js)
 
+It works quite well with the online editor, e.g jsfiddle, codepen etc...
+Here is an [startupthree.js example on jsfiddle](https://jsfiddle.net/jetienne/nk9kswk5/)
+
 # How to use it
 
 ```html

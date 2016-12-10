@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<script src='https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js'></script>
+<script src='https://rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js'></script>
 <body style='margin: 0px; overflow: hidden; text-align:center;'><script>
 startUpTHREEjs(function(demo){
 	var geometry = new THREE.TorusGeometry(1, 0.5)
@@ -8,9 +8,9 @@ startUpTHREEjs(function(demo){
 	var mesh = new THREE.Mesh(geometry, material)
 	demo.scene.add(mesh)
 
-	demo.onRenderFcts.push(function(){
-		mesh.rotation.x += 0.01
-		mesh.rotation.y += 0.01
+	demo.onRenderFcts.push(function(delta){
+		mesh.rotation.x += Math.PI*2 * delta * 0.1
+		mesh.rotation.y += Math.PI*2 * delta * 0.1
 	})
 })
 </script></body>

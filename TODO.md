@@ -1,7 +1,5 @@
 # TODO
 - add webvr options
-- change API ? i dont like the exports
-  - just put a funciton and some options ?
 - add rayinput option
 - add ammoWorld options
 - have an options parameter
@@ -10,15 +8,9 @@
   - cameraControls : 'type', or even your own controls
     - cameraControls: function contructor(){}
     - cameraControls: false to disable it
-- how to load it in codepen and other ?
-  - cdn on github code - e.g. https://rawgit.com/
 
 # Goals
 - seems to be the starting of a boilerplate
 - remove the lines which are in all three.js demo
 - make it tunable, like with ammo.js or not
 - make it easily integrable
-
-
-- DONE handle the loading in this function
-  - document write for now

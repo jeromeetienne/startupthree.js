@@ -1,13 +1,7 @@
-# How to handle load ?
-- could be nice to have automatic loading of the js files
-- document.write ? or ajax and then eval ?
-  - the less black magic the better
-- how to handle that in a multi module-imports ecosystem ?
-
-
 # TODO
 - add webvr options
-
+- change API ? i dont like the exports
+  - just put a funciton and some options ?
 - add rayinput option
 - add ammoWorld options
 - have an options parameter

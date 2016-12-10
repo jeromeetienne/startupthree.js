@@ -18,13 +18,14 @@ thanks to rawgit.
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 <script src='startupThree.js'></script>
 <body style='margin: 0px; overflow: hidden; text-align:center;'><script>
-startUpTHREEjs(window, {}, function(){
-	
+startUpTHREEjs(function(){
+	// create a mesh
 	var geometry = new THREE.TorusGeometry(1, 0.5)
 	var material = new THREE.MeshNormalMaterial()
 	var mesh = new THREE.Mesh(geometry, material)
+	// add the mesh to the scene
 	demo.scene.add(mesh)
-
+	// make the mesh move
 	onRenderFcts.push(function(){
 		mesh.rotation.x += 0.01
 		mesh.rotation.y += 0.01

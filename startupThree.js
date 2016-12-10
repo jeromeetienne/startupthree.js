@@ -1,12 +1,17 @@
 /**
  * main function
  */
-function startUpTHREEjs(exports, options, callback){
-	var urlPrefix = 'https://rawgit.com/jeromeetienne/startupthree.js/master/examples/'
-	var urlPrefix = './'
+function startUpTHREEjs(options, callback){
+	// handle if no options is passed
+	if( typeof(options) === 'function' ){
+		callback = options
+		options = {}
+	}
 
-	startUpTHREEjs._loadStartThreejsScripts(urlPrefix, function(){
-		startUpTHREEjs._init(exports, options, callback)
+	// load scripts
+	startUpTHREEjs._loadStartThreejsScripts(options, function(){
+		// init three.js
+		startUpTHREEjs._init(options, callback)
 	})
 }
 
@@ -17,7 +22,9 @@ function startUpTHREEjs(exports, options, callback){
 /**
  * load all the scripts needed by startupthree.js
  */
-startUpTHREEjs._loadStartThreejsScripts = function(urlPrefix, onLoaded){
+startUpTHREEjs._loadStartThreejsScripts = function(options, onLoaded){
+	var urlPrefix = options.urlPrefix !== undefined ? options.urlPrefix : 'https://rawgit.com/jeromeetienne/startupthree.js/master/'
+
 	var firstBatchUrls = []
 	var secondBatchUrls = []
 
@@ -39,32 +46,36 @@ startUpTHREEjs._loadStartThreejsScripts = function(urlPrefix, onLoaded){
 startUpTHREEjs._loadScripts = function(urls, onLoaded){
 	var loadedCount = 0
 	for(var i = 0; i < urls.length; i++){
-		loadScript(urls[i], function(content){
+		startUpTHREEjs._loadScript(urls[i], function(content){
+			// eval the content of this file
 			eval(content)
-			loadedCount++;
+			
+			loadedCount++
+			// check if the loading if completed
 			if( loadedCount === urls.length ){
 				onLoaded()
 			}
 		})
 	}
-	return
-	function loadScript(url, onLoaded){
-		var request = new XMLHttpRequest();
-		request.open("GET", url);
-		request.onreadystatechange = function(){
-			if (request.status === 200 && request.readyState === 4 ){
-				onLoaded(request.responseText);
-			}
+}
+
+startUpTHREEjs._loadScript = function(url, onLoaded){
+	var request = new XMLHttpRequest();
+	request.open("GET", url);
+	request.onreadystatechange = function(){
+		if (request.status === 200 && request.readyState === 4 ){
+			onLoaded(request.responseText);
 		}
-		request.send()
 	}
+	request.send()
 }
 
 //////////////////////////////////////////////////////////////////////////////
 //		init three.js
 //////////////////////////////////////////////////////////////////////////////
 
-startUpTHREEjs._init = function(exports, options, callback){
+startUpTHREEjs._init = function(options, callback){
+	var exports = {}
 	// handle options default values
 	options.stats = options.stats !== undefined ? options.stats : false
 	options.cameraControls = options.cameraControls !== undefined ? options.cameraControls : 'OrbitControls'
@@ -85,9 +96,9 @@ startUpTHREEjs._init = function(exports, options, callback){
 	// init scene and camera
 	var scene	= new THREE.Scene();
 	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
-	camera.position.z = 10;
 	if( options.cameraControls === 'OrbitControls' ){
 		var controls	= new THREE.OrbitControls(camera, renderer.domElement)
+		camera.position.z = 10;
 	}else if( options.cameraControls === false ){
 		var controls = null
 	}else{

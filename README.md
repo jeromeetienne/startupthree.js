@@ -12,7 +12,8 @@ thanks to rawgit.
 [https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js](https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js)
 
 It works quite well with the online editor, e.g jsfiddle, codepen etc...
-Here is an [startupthree.js example on jsfiddle](https://jsfiddle.net/jetienne/nk9kswk5/)
+Here is an [startupthree.js example on jsfiddle](https://jsfiddle.net/jetienne/nk9kswk5/). 
+You can fork it and start prototyping in three.js in less than a minute :)
 
 # How to use it
 

@@ -45,6 +45,7 @@ So here is how to release
 
 1. replace the old version by the new version in the whole repository
 1. commit the changes - ```git commit -a -m 'bump version'```
+1. push the changes - ```git push```
 1. tag the repo - ```git tag 0.5.1```
 1. push the tag - ```git push --tags```
 1. you are done.

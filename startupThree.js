@@ -11,12 +11,14 @@ function startUpTHREEjs(options, callback){
 	}
 	
 	// handle options default values
-	options.cameraControls = options.cameraControls !== undefined ? options.cameraControls : 'OrbitControls'
 	options.urlPrefix = options.urlPrefix !== undefined ? options.urlPrefix : 'https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.5.0/'
 	options.noDownload = options.noDownload !== undefined ? options.noDownload : false
 	options.stats = options.stats !== undefined ? options.stats : false
 	options.webvr = options.webvr !== undefined ? options.webvr : false
 	options.rayInput = options.rayInput !== undefined ? options.rayInput : false
+	if( options.cameraControls === undefined ){
+		options.cameraControls = options.webvr === true ? 'VRControls' : 'OrbitControls'
+	}
 	
 	// load scripts
 	startUpTHREEjs.loadStartThreejsScripts(options, function(){
@@ -191,7 +193,7 @@ startUpTHREEjs._initThreejs = function(options, callback){
 		if( vrEffect !== undefined ){
 			vrEffect.render(scene, camera);
 		}else{
-			renderer.render( scene, camera );		
+			renderer.render(scene, camera);		
 		}
 	})
 	
@@ -201,7 +203,6 @@ startUpTHREEjs._initThreejs = function(options, callback){
 	
 	if( options.webvr === true )	this._initWebvr(options, renderer)
 
-	
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
@@ -216,8 +217,6 @@ startUpTHREEjs._initThreejs = function(options, callback){
 	// Object.keys(demo).forEach(function(property){
 	// 	window[property] = demo[property]
 	// })
-	
-	
 	
 	callback(exports)
 }
@@ -236,6 +235,9 @@ startUpTHREEjs._initWebvr = function(options, renderer){
 	document.querySelector('#fullscreenContainer').appendChild( renderer.domElement );		
 
 	var styleText = 
+		'#buttonsContainer {' + 
+			'z-index: 1;' + 
+		'}' +
 		'#buttonsContainer img:hover {' + 
 			'border-radius: 5px;' + 
 			'background: #444;'+
@@ -300,6 +302,7 @@ startUpTHREEjs._initWebvr = function(options, renderer){
 		if (displays.length === 0) return
 		vrDisplay = displays[0];
 
+		// if can not present, hide the buttons for presenting webvr
 		if( vrDisplay.capabilities.canPresent !== true ){
 			vrTriggerButton.style.display = 'none'
 			vrResetButton.style.display = 'none'

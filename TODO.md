@@ -3,7 +3,13 @@
   - issue with eval ?
 - add webvr options
 - add rayinput option
-- support phoneasvrcontroller.js
+- add phoneasvrcontroller.js
+  - usefull if rayinput
+- add detector 
+  - webgl 
+  - webvr https://threejs.org/examples/js/vr/WebVR.js
+
+- webvrPolyfillPointerLock true/false
 
 # Goals
 - seems to be the starting of a boilerplate

@@ -19,6 +19,9 @@ function startUpTHREEjs(options, callback){
 	if( options.cameraControls === undefined ){
 		options.cameraControls = options.webvr === true ? 'VRControls' : 'OrbitControls'
 	}
+	if( options.webvrPolyfill === undefined ){
+		options.webvrPolyfill = options.webvr === true ? true : false
+	}
 	
 	// load scripts
 	startUpTHREEjs.loadStartThreejsScripts(options, function(){
@@ -58,9 +61,12 @@ startUpTHREEjs.loadStartThreejsScripts = function(options, onLoaded){
 	if( options.rayInput === true ){
 		secondBatchUrls.push(urlPrefix+'vendor/ray.min.js')		
 	}
-	
-	if( options.webvr === true ){
+
+	if( options.webvrPolyfill === true ){
 		firstBatchUrls.push(urlPrefix+'vendor/webvr-polyfill.min.js')		
+	}
+
+	if( options.webvr === true ){
 		secondBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/effects/VREffect.js')		
 	}
 	
@@ -84,9 +90,13 @@ startUpTHREEjs._loadScripts = function(urls, onLoaded){
 	}
 	// go thru all the urls
 	for(var i = 0; i < urls.length; i++){
-		startUpTHREEjs._loadScript(urls[i], function(content){
+		startUpTHREEjs._loadScript(urls[i], function(content, url){
 			// eval the content of this file
 			eval(content)
+			// yucky kludge to export Stats in window
+			if( url.endsWith('/stats.min.js') === true ){
+				window.Stats = Stats
+			}
 			// update loadedCount
 			loadedCount++
 			// check if the loading if completed
@@ -102,7 +112,7 @@ startUpTHREEjs._loadScript = function(url, onLoaded){
 	request.open("GET", url);
 	request.onreadystatechange = function(){
 		if (request.status === 200 && request.readyState === 4 ){
-			onLoaded(request.responseText);
+			onLoaded(request.responseText, url);
 		}
 	}
 	request.send()

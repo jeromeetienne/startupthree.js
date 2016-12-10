@@ -46,4 +46,4 @@ So here is how to release
 1. replace all the mention of the version in the source by the new version
 1. tag the repo - ```git tag 0.5.0```
 1. push the tag - ```git push --tags```
-1. you are done
+1. you are done.

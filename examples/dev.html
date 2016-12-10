@@ -4,10 +4,13 @@
 <body style='margin: 0px; overflow: hidden; text-align:center;'><script>
 startUpTHREEjs({
 	urlPrefix : '../',
+	noDownload : false,
+	// rayInput : true,
 	// stats: true,
 	cameraControls: 'VRControls',
 	webvr : true,
 }, function(demo){
+		
 	var geometry = new THREE.TorusGeometry(1, 0.5)
 	var material = new THREE.MeshNormalMaterial()
 	var mesh = new THREE.Mesh(geometry, material)

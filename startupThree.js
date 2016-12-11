@@ -14,13 +14,21 @@ function startUpTHREEjs(options, callback){
 	options.urlPrefix = options.urlPrefix !== undefined ? options.urlPrefix : 'https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.5.1/'
 	options.noDownload = options.noDownload !== undefined ? options.noDownload : false
 	options.stats = options.stats !== undefined ? options.stats : false
-	options.webvr = options.webvr !== undefined ? options.webvr : false
 	options.rayInput = options.rayInput !== undefined ? options.rayInput : false
+
+	options.webvr = options.webvr !== undefined ? options.webvr : false
+	options.webvrPolyfillPointerLock = options.webvrPolyfillPointerLock !== undefined ? options.webvrPolyfillPointerLock : false
+
 	if( options.cameraControls === undefined ){
 		options.cameraControls = options.webvr === true ? 'VRControls' : 'OrbitControls'
 	}
 	if( options.webvrPolyfill === undefined ){
 		options.webvrPolyfill = options.webvr === true ? true : false
+	}
+
+	options.webglDetector = options.webglDetector !== undefined ? options.webglDetector : true
+	if( options.webvrDetector === undefined ){
+		options.webvrDetector = options.webvr === true ? true : false
 	}
 	
 	// load scripts
@@ -67,7 +75,14 @@ startUpTHREEjs.loadStartThreejsScripts = function(options, onLoaded){
 	}
 
 	if( options.webvr === true ){
-		secondBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/effects/VREffect.js')		
+		secondBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/effects/VREffect.js')	
+	}
+
+	if( options.webglDetector === true ){
+		firstBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/Detector.js')	
+	}
+	if( options.webvrDetector === true ){
+		firstBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/vr/WEBVR.js')	
 	}
 	
 	// actually load the scripts
@@ -93,13 +108,13 @@ startUpTHREEjs._loadScripts = function(urls, onLoaded){
 		startUpTHREEjs._loadScript(urls[i], function(content, url){
 			// eval the content of this file
 			eval(content)
-			// if stats is defined locally but not globally, export it globally
+			// if stats.js is defined locally but not globally, export it globally
 			// - yucky kludge to export Stats in window, it is because
 			//   stats.js is doing ```var Stats = function(){}```. so
 			//   eval is declaring this as a local only
-			if( typeof(Stats) !== 'undefined' && window.Stats === undefined ){
-				window.Stats = Stats
-			}
+			if( typeof(Stats) !== 'undefined' && window.Stats === undefined )	window.Stats = Stats
+			if( typeof(Detector) !== 'undefined' && window.Detector === undefined )	window.Detector = Detector
+			if( typeof(WEBVR) !== 'undefined' && window.WEBVR === undefined )	window.WEBVR = WEBVR
 			// update loadedCount
 			loadedCount++
 			// check if the loading if completed
@@ -128,13 +143,31 @@ startUpTHREEjs._loadScript = function(url, onLoaded){
 startUpTHREEjs._initThreejs = function(options, callback){
 	var exports = {}
 	
+	//////////////////////////////////////////////////////////////////////////////
+	//		Handle detector
+	//////////////////////////////////////////////////////////////////////////////
+
+	if( options.webglDetector === true ){
+		if ( ! Detector.webgl ){
+			Detector.addGetWebGLMessage();
+			return
+		}
+	}
+
+	if( options.webvrDetector === true ){
+		if ( WEBVR.isAvailable() === false ) {
+			document.body.appendChild( WEBVR.getMessage() );
+			return
+		}		
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
 	
 	// init renderer
 	var renderer	= new THREE.WebGLRenderer();
-	renderer.setPixelRatio( window.devicePixelRatio );
+	// renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 	
@@ -321,4 +354,31 @@ startUpTHREEjs._initWebvr = function(options, renderer){
 			vrResetButton.style.display = 'none'
 		}
 	});
+	
+	if( options.webvrPolyfillPointerLock === true ){
+		// controls the camera with pointer lock on desktop
+		renderer.domElement.addEventListener('click', function(event){
+			var element = renderer.domElement
+			// check it is the proper click
+			if( event.target !== element )	return
+			if( vrDisplay.displayName !== "Mouse and Keyboard VRDisplay (webvr-polyfill)")	return	
+			// Ask the browser to lock the pointer
+			element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+			if ( /Firefox/i.test( navigator.userAgent ) ) {
+				var fullscreenchange = function ( event ) {
+					if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+						document.removeEventListener( 'fullscreenchange', fullscreenchange );
+						document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+						element.requestPointerLock();
+					}
+				};
+				document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+				document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+				element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+				element.requestFullscreen();
+			} else {
+				element.requestPointerLock();
+			}
+		})		
+	}
 }

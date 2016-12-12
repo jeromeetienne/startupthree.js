@@ -82,7 +82,7 @@ startUpTHREEjs.loadStartThreejsScripts = function(options, onLoaded){
 		firstBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/Detector.js')	
 	}
 	if( options.webvrDetector === true ){
-		firstBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/vr/WEBVR.js')	
+		firstBatchUrls.push(urlPrefix+'vendor/three.js/examples/js/vr/WebVR.js')	
 	}
 	
 	// actually load the scripts

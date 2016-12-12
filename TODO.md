@@ -4,8 +4,8 @@
 - DONE add meta tag dynamically
   - http://stackoverflow.com/questions/7711411/how-to-insert-metatag-without-using-jquery-append
 - startupthree.js ? is that a good name
-- add webvr options
-  - done ? test on desktop/phone/vive
+- test webvr options
+  - test on desktop/phone/vive
 - FIXME when going fullscreen, there is a ugly white line at the bottom
   - not sure what is happening
 

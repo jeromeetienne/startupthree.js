@@ -1,4 +1,9 @@
 # TODO
+- DONE put body css in the library
+  - make the boilerplate simpler
+- add meta tag dynamically
+  - http://stackoverflow.com/questions/7711411/how-to-insert-metatag-without-using-jquery-append
+- startupthree.js ? is that a good name
 - add webvr options
   - done ? 
 - FIXME when going fullscreen, there is a ugly white line at the bottom

@@ -30,7 +30,7 @@ function startUpTHREEjs(options, callback){
 	if( options.webvrDetector === undefined ){
 		options.webvrDetector = options.webvr === true ? true : false
 	}
-	
+
 	// load scripts
 	startUpTHREEjs.loadStartThreejsScripts(options, function(){
 		// init three.js
@@ -142,6 +142,10 @@ startUpTHREEjs._loadScript = function(url, onLoaded){
 
 startUpTHREEjs._initThreejs = function(options, callback){
 	var exports = {}
+	
+	
+	document.querySelector('body').style.margin = '0px'		
+	document.querySelector('body').style.overflow = 'hidden'
 	
 	//////////////////////////////////////////////////////////////////////////////
 	//		Handle detector

@@ -144,6 +144,11 @@ startUpTHREEjs._initThreejs = function(options, callback){
 	var exports = {}
 	
 	
+	var viewPortElement = document.createElement('meta');
+	viewPortElement.name = "viewport";
+	viewPortElement.content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0";
+	document.querySelector('head').appendChild(viewPortElement);	
+	
 	document.querySelector('body').style.margin = '0px'		
 	document.querySelector('body').style.overflow = 'hidden'
 	

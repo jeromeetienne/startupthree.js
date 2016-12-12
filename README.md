@@ -13,6 +13,7 @@ thanks to [rawgit](https://rawgit.com).
 
 It works quite well with the online editor, e.g jsfiddle, codepen etc...
 Here is an [startupthree.js example on jsfiddle](https://jsfiddle.net/jetienne/nk9kswk5/). 
+[same on codepen](http://codepen.io/jeromeetienne/pen/dOqZNm)
 You can fork it and start prototyping in three.js in less than a minute :)
 
 # How to use it

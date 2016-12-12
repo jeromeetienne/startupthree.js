@@ -11,7 +11,7 @@ function startUpTHREEjs(options, callback){
 	}
 	
 	// handle options default values
-	options.urlPrefix = options.urlPrefix !== undefined ? options.urlPrefix : 'https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.5.1/'
+	options.urlPrefix = options.urlPrefix !== undefined ? options.urlPrefix : 'https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.6.0/'
 	options.noDownload = options.noDownload !== undefined ? options.noDownload : false
 	options.stats = options.stats !== undefined ? options.stats : false
 	options.rayInput = options.rayInput !== undefined ? options.rayInput : false

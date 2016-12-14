@@ -9,7 +9,7 @@ three.js demo ?
 
 You dont have to download it. It is possible to get it directly from a CDN 
 thanks to [rawgit](https://rawgit.com).
-[https://cdn.rawgit.com/jeromeetienne/startupthree.js/master/startupThree.js](https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.6.0/startupThree.js)
+[https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.6.0/startupThree.js](https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.6.0/startupThree.js)
 
 It works quite well with the online editor, e.g jsfiddle, codepen etc...
 Here is an [startupthree.js example on jsfiddle](https://jsfiddle.net/jetienne/nk9kswk5/). 
@@ -19,7 +19,7 @@ You can fork it and start prototyping in three.js in less than a minute :)
 # How to use it
 
 ```html
-<script src='../startupThree.js'></script>
+<script src='https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.6.0/startupThree.js'></script>
 <body><script>
 startUpTHREEjs(function(demo){
 	// create mesh
